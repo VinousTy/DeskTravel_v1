@@ -24,3 +24,11 @@ services:
       - '8000:8000'
     depends_on:
       - db
+  web-front:
+    build: frontend/.
+    volumes:
+      - ./frontend/:/usr/src/app
+    command: sh -c 'cd app && npm start'
+    ports:
+      - 3000:3000
+    tty: true
