@@ -29,7 +29,7 @@ interface INPUTS {
 const Profile: React.FC = () => {
   const [avatarImage, setAvatarImage] = useState<any>(null),
     [image, setImage] = useState<File | null>(null),
-    [userCategory, setUserCategory] = useState(0);
+    [userCategory, setUserCategory] = useState<number | undefined>(undefined);
   const dispatch: AppDispatch = useDispatch();
   const profile = useSelector(selectProfile);
   const categories = useSelector(selectCategory);
@@ -37,10 +37,12 @@ const Profile: React.FC = () => {
   const isWide = useMedia({ maxWidth: '768px' });
 
   const categoryOnProfile = categories.filter((category) => {
-    return category.id === profile.category;
+    if (category.id === 0) {
+      return;
+    } else {
+      return category.id === profile.category;
+    }
   });
-
-  console.log(userCategory);
 
   const {
     register,
@@ -134,104 +136,108 @@ const Profile: React.FC = () => {
           </span>
         </IconButton>
         <div className="mb-4">
-          <label>
-            <div className="text-left ml-7 md:ml-14 mb-1 pl-1">名前</div>
-            <input
-              className="md:shadow bg-black placeholder-fray-500 appearance-none rounded w-10/12 py-2 px-3 mb-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
-              type="text"
-              value={profile?.name}
-              placeholder="名前を入力"
-              {...register('name', {
-                required: {
-                  value: true,
-                  message: '※名前の入力は必須です',
-                },
-              })}
-              onChange={(e) => dispatch(editName(e.target.value))}
-            />
-          </label>
+          <div className="text-left ml-7 md:ml-14 mb-1 pl-1">
+            <label data-testid="label-name">名前</label>
+          </div>
+          <input
+            className="md:shadow bg-black placeholder-fray-500 appearance-none rounded w-10/12 py-2 px-3 mb-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+            type="text"
+            data-testid="input-name"
+            value={profile?.name}
+            placeholder="名前を入力"
+            {...register('name', {
+              required: {
+                value: true,
+                message: '※名前の入力は必須です',
+              },
+            })}
+            onChange={(e) => dispatch(editName(e.target.value))}
+          />
           {errors.name && (
-            <p className="text-red-500 text-xs italic">{errors.name.message}</p>
+            <p className="text-red-500 text-xs italic" role="alert">
+              {errors.name.message}
+            </p>
           )}
         </div>
         <div className="mb-6">
-          <label>
-            <div className="text-left ml-7 md:ml-14 mb-1 pl-1">
-              ユーザーネーム
-            </div>
-            <input
-              className="shadow bg-black placeholder-fray-500 appearance-none rounded w-10/12 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
-              id="userName"
-              type="userName"
-              value={profile?.user_name}
-              placeholder="半角英数・記号のみで入力"
-              {...register('userName', {
-                required: {
-                  value: true,
-                  message: '※ユーザーネームの入力は必須です',
-                },
-                pattern: {
-                  value: /^[a-zA-Z0-9!-/:-@¥[-`{-~]*$/,
-                  message:
-                    'ユーザーネームには半角英数・記号のみを使用してください',
-                },
-              })}
-              onChange={(e) => dispatch(editUserName(e.target.value))}
-            />
-          </label>
+          <div className="text-left ml-7 md:ml-14 mb-1 pl-1">
+            <label data-testid="label-username">ユーザーネーム</label>
+          </div>
+          <input
+            className="shadow bg-black placeholder-fray-500 appearance-none rounded w-10/12 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+            id="userName"
+            data-testid="input-username"
+            type="userName"
+            value={profile?.user_name}
+            placeholder="半角英数・記号のみで入力"
+            {...register('userName', {
+              required: {
+                value: true,
+                message: '※ユーザーネームの入力は必須です',
+              },
+              pattern: {
+                value: /^[a-zA-Z0-9!-/:-@¥[-`{-~]*$/,
+                message:
+                  'ユーザーネームには半角英数・記号のみを使用してください',
+              },
+            })}
+            onChange={(e) => dispatch(editUserName(e.target.value))}
+          />
           {errors.userName && (
-            <p className="text-red-500 text-xs italic">
+            <p className="text-red-500 text-xs italic" role="alert">
               {errors.userName.message}
             </p>
           )}
         </div>
         <div className="mb-6">
-          <label>
-            <div className="text-left ml-7 md:ml-14 mb-1 pl-1">カテゴリ</div>
-            <select
-              className="bg-black w-10/12 py-2 px-3 text-gray-700 rounded"
-              id="category"
-              value={userCategory}
-              {...register('category', {
-                required: {
-                  value: true,
-                  message: '※カテゴリの選択は必須です',
-                },
-              })}
-              onChange={(e: any) => setUserCategory(e.target.value)}
-            >
-              <option value="">カテゴリを選択してください</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className="text-left ml-7 md:ml-14 mb-1 pl-1">
+            <label data-testid="label-category">カテゴリ</label>
+          </div>
+          <select
+            className="bg-black w-10/12 py-2 px-3 text-gray-700 rounded"
+            id="category"
+            data-testid="select-category"
+            value={userCategory}
+            {...register('category', {
+              required: {
+                value: true,
+                message: '※カテゴリの選択は必須です',
+              },
+            })}
+            onChange={(e: any) => setUserCategory(e.target.value)}
+          >
+            <option value="">カテゴリを選択してください</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
           {errors.category && (
-            <p className="text-red-500 text-xs mt-3 italic">
+            <p className="text-red-500 text-xs mt-3 italic" role="alert">
               {errors.category.message}
             </p>
           )}
         </div>
         <div className="mb-6">
-          <label>
-            <div className="text-left ml-7 md:ml-14 mb-1 pl-1">自己紹介</div>
-            <textarea
-              className="form-control md:shadow bg-black placeholder-fray-500 appearance-none rounded w-10/12 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
-              rows={6}
-              id="self_introduction"
-              value={profile?.self_introduction}
-              placeholder="自己紹介文は150文字以内で入力"
-              {...register('self_introduction', {
-                maxLength: {
-                  value: 150,
-                  message: '自己紹介文は150文字以内で入力してください',
-                },
-              })}
-              onChange={(e) => dispatch(editSelfIntroduction(e.target.value))}
-            />
-          </label>
+          <div className="text-left ml-7 md:ml-14 mb-1 pl-1">
+            <label data-testid="label-self-introduction">自己紹介</label>
+          </div>
+          <textarea
+            className="form-control md:shadow bg-black placeholder-fray-500 appearance-none rounded w-10/12 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+            rows={6}
+            id="self_introduction"
+            data-testid="input-self-introduction"
+            value={profile?.self_introduction}
+            placeholder="自己紹介文は150文字以内で入力"
+            {...register('self_introduction', {
+              maxLength: {
+                value: 150,
+                message: '自己紹介文は150文字以内で入力してください',
+              },
+            })}
+            onChange={(e) => dispatch(editSelfIntroduction(e.target.value))}
+          />
           {errors.self_introduction && (
             <p className="text-red-500 text-xs italic">
               {errors.self_introduction.message}
@@ -240,7 +246,9 @@ const Profile: React.FC = () => {
         </div>
         <hr className={styles.border}></hr>
         <div className={`${styles.btn} bg-black py-8 cursor-pointer rounded-b`}>
-          <button type="submit">プロフィールを登録する</button>
+          <button type="submit" data-testid="button-regist">
+            プロフィールを登録する
+          </button>
         </div>
       </div>
     </form>
