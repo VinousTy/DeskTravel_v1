@@ -72,3 +72,144 @@ export interface PROPS_PROFILELIST {
   self_introduction: string;
   img: any;
 }
+
+export interface POST_STATE {
+  isDrawer: boolean;
+  isOpen: boolean;
+  isEditOpen: boolean;
+  isDeleteOpen: boolean;
+  isMonitor: boolean;
+  isComputer: boolean;
+  isKeyboard: boolean;
+  isMouse: boolean;
+  isSpeaker: boolean;
+  isTable: boolean;
+  isChair: boolean;
+  isOther: boolean;
+  isLoadingPost: boolean;
+  post: {
+    id: number;
+    body: string;
+    userPost: number;
+    created_on: string;
+    bookmark: number[];
+    liked: number[];
+  }[];
+  posts: {
+    id: number;
+    body: string;
+    userPost: number;
+    created_on: string;
+    bookmark: number[];
+    liked: number[];
+  }[];
+  img: {
+    id: number;
+    img: any;
+    postId: number;
+  }[];
+  monitor: {
+    id: number;
+    name: string;
+    postId: number;
+  }[];
+  computer: {
+    id: number;
+    name: string;
+    postId: number;
+  }[];
+  keyboard: {
+    id: number;
+    name: string;
+    postId: number;
+  }[];
+  mouse: {
+    id: number;
+    name: string;
+    postId: number;
+  }[];
+  speaker: {
+    id: number;
+    name: string;
+    postId: number;
+  }[];
+  table: {
+    id: number;
+    name: string;
+    postId: number;
+  }[];
+  chair: {
+    id: number;
+    name: string;
+    postId: number;
+  }[];
+  other: {
+    id: number;
+    name: string;
+    postId: number;
+  }[];
+  comments: {
+    id: number;
+    body: string;
+    userComment: number;
+    postId: number;
+  }[];
+}
+
+export interface NEW_POST {
+  id: number;
+  body: string;
+}
+
+export interface POST_BODY {
+  body: string;
+}
+
+export interface POST_ID {
+  id: number;
+}
+
+export interface POST_LIKED {
+  id: number;
+  body: string;
+  current: number[];
+  current_bookmark: number[];
+  new: number;
+  new_bookmark: number;
+}
+
+export interface POST_BOOKMARK {
+  id: number;
+  body: string;
+  current: number[];
+  current_bookmark: number[];
+  new: number;
+  new_bookmark: number;
+}
+
+export interface POST_COMMENT {
+  body: string;
+  postId: number;
+}
+
+export interface POST_IMAGE {
+  img: File | null;
+  postId: any;
+}
+
+export interface UPDATE_IMAGE {
+  id: number;
+  img: File | null;
+  postId: any;
+}
+
+export interface POST_ITEM {
+  name: string[];
+  postId: any;
+}
+
+export interface UPDATE_ITEM {
+  id: number;
+  name: string[];
+  postId: any;
+}
