@@ -352,7 +352,7 @@ const PostRegist: React.FC = () => {
     await dispatch(postOther(packetOther));
     await dispatch(isLoadingPostEnd());
     setImage(null);
-    history.push('/post/list');
+    await history.push('/post/list');
   };
 
   const onSubmit: SubmitHandler<INPUTS> = async (data) => {
@@ -386,25 +386,30 @@ const PostRegist: React.FC = () => {
           </IconButton>
         </div>
         <div className="mb-4">
-          <label>
-            <div className="text-left ml-5 md:ml-10 mb-1 pl-1">投稿文</div>
-            <textarea
-              className={`${styles.text_area} md:shadow ml-5 md:ml-10  bg-black appearance-none rounded py-2 px-3 mb-5 placeholder-gray-500 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
-              id="body"
-              value={body}
-              placeholder="デスクのポイントやこだわりなど"
-              rows={5}
-              {...register('body', {
-                required: {
-                  value: true,
-                  message: '※投稿文の入力は必須です',
-                },
-              })}
-              onChange={(e) => setBody(e.target.value)}
-            />
-          </label>
+          <div className="text-left ml-5 md:ml-10 mb-1 pl-1">
+            {' '}
+            <label data-testid="label-body">投稿文</label>
+          </div>
+          <textarea
+            className={`${styles.text_area} md:shadow ml-5 md:ml-10  bg-black appearance-none rounded py-2 px-3 mb-5 placeholder-gray-500 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
+            id="body"
+            data-testid="input-body"
+            value={body}
+            placeholder="デスクのポイントやこだわりなど"
+            rows={5}
+            {...register('body', {
+              required: {
+                value: true,
+                message: '※投稿文の入力は必須です',
+              },
+            })}
+            onChange={(e) => setBody(e.target.value)}
+          />
           {errors.body && (
-            <p className="text-red-500 text-xs italic text-center md:text-base">
+            <p
+              className="text-red-500 text-xs italic text-center md:text-base"
+              role="alert"
+            >
               {errors.body.message}
             </p>
           )}
@@ -415,7 +420,9 @@ const PostRegist: React.FC = () => {
               <div className="bg-blue-200 px-1 py-1 rounded-full">
                 <DesktopWindowsIcon className="text-blue-700" />
               </div>
-              <span className="ml-1">モニター</span>
+              <span className="ml-1" data-testid="label-monitor">
+                モニター
+              </span>
             </div>
             <div>
               {monitors.length > 0 &&
@@ -431,6 +438,7 @@ const PostRegist: React.FC = () => {
                 className={`${styles.area_input} ml-5 md:ml-10 shadow bg-black appearance-none rounded py-2 px-3 placeholder-gray-500
                  mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
                 id="monitor"
+                data-testid="input-monitor"
                 type="text"
                 value={monitor}
                 placeholder="HP M22f FHD 21.5インチ"
@@ -444,7 +452,10 @@ const PostRegist: React.FC = () => {
               />
             </div>
             {errors.monitor && (
-              <p className="text-red-500 text-xs italic text-center">
+              <p
+                className="text-red-500 text-xs italic text-center"
+                role="alert"
+              >
                 {errors.monitor.message}
               </p>
             )}
@@ -463,7 +474,9 @@ const PostRegist: React.FC = () => {
               <div className="bg-thin-orange px-1 py-1 rounded-full">
                 <LaptopChromebookIcon className="text-orange" />
               </div>
-              <span className="ml-1">コンピューター</span>
+              <span className="ml-1" data-testid="label-computer">
+                コンピューター
+              </span>
             </div>
             <div>
               {computers.length > 0 &&
@@ -478,6 +491,7 @@ const PostRegist: React.FC = () => {
               <input
                 className={`${styles.area_input} ml-5 md:ml-10 shadow bg-black placeholder-gray-500 appearance-none rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
                 id="computer"
+                data-testid="input-computer"
                 type="text"
                 value={computer}
                 placeholder="MacBook Pro 14インチ"
@@ -491,7 +505,10 @@ const PostRegist: React.FC = () => {
               />
             </div>
             {errors.computer && (
-              <p className="text-red-500 text-xs italic text-center">
+              <p
+                className="text-red-500 text-xs italic text-center"
+                role="alert"
+              >
                 {errors.computer.message}
               </p>
             )}
@@ -510,7 +527,10 @@ const PostRegist: React.FC = () => {
               <div className="bg-red-200 px-1 py-1 rounded-full">
                 <KeyboardIcon className="text-red-500" />
               </div>
-              <span className="ml-1"> キーボード</span>
+              <span className="ml-1" data-testid="label-keyboard">
+                {' '}
+                キーボード
+              </span>
             </div>
             <div>
               {keyboards.length > 0 &&
@@ -525,6 +545,7 @@ const PostRegist: React.FC = () => {
               <input
                 className={`${styles.area_input} ml-5 md:ml-10 shadow bg-black placeholder-gray-500 appearance-none rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
                 id="keyboard"
+                data-testid="input-keyboard"
                 type="text"
                 value={keyboard}
                 placeholder="ロジクールMX Keysワイヤレス"
@@ -538,7 +559,10 @@ const PostRegist: React.FC = () => {
               />
             </div>
             {errors.keyboard && (
-              <p className="text-red-500 text-xs italic text-center">
+              <p
+                className="text-red-500 text-xs italic text-center"
+                role="alert"
+              >
                 {errors.keyboard.message}
               </p>
             )}
@@ -557,7 +581,9 @@ const PostRegist: React.FC = () => {
               <div className="bg-thin-green bg-red-200 px-1 py-1 rounded-full">
                 <MouseIcon className="text-green" />
               </div>
-              <span className="ml-1">マウス</span>
+              <span className="ml-1" data-testid="label-mouse">
+                マウス
+              </span>
             </div>
             <div>
               {mouses.length > 0 &&
@@ -572,6 +598,7 @@ const PostRegist: React.FC = () => {
               <input
                 className={`${styles.area_input} ml-5 md:ml-10 shadow bg-black placeholder-gray-500 appearance-none rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
                 id="mouse"
+                data-testid="input-mouse"
                 type="text"
                 value={mouse}
                 placeholder="ロジクールBluetooth Mouse"
@@ -585,7 +612,10 @@ const PostRegist: React.FC = () => {
               />
             </div>
             {errors.mouse && (
-              <p className="text-red-500 text-xs italic text-center">
+              <p
+                className="text-red-500 text-xs italic text-center"
+                role="alert"
+              >
                 {errors.mouse.message}
               </p>
             )}
@@ -604,7 +634,9 @@ const PostRegist: React.FC = () => {
               <div className="bg-purple-200 px-1 py-1 rounded-full">
                 <VolumeUpIcon className="text-purple-500" />
               </div>
-              <span className="ml-1">スピーカー</span>
+              <span className="ml-1" data-testid="label-speaker">
+                スピーカー
+              </span>
             </div>
             <div>
               {speakers.length > 0 &&
@@ -619,6 +651,7 @@ const PostRegist: React.FC = () => {
               <input
                 className={`${styles.area_input} ml-5 md:ml-10 shadow bg-black placeholder-gray-500 appearance-none rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
                 id="speaker"
+                data-testid="input-speaker"
                 type="text"
                 value={speaker}
                 placeholder="BoseSoundLink Mini II"
@@ -632,7 +665,10 @@ const PostRegist: React.FC = () => {
               />
             </div>
             {errors.speaker && (
-              <p className="text-red-500 text-xs italic text-center">
+              <p
+                className="text-red-500 text-xs italic text-center"
+                role="alert"
+              >
                 {errors.speaker.message}
               </p>
             )}
@@ -651,7 +687,9 @@ const PostRegist: React.FC = () => {
               <div className="bg-pink-200 px-2 py-2 rounded-full">
                 <SiAirtable className="text-pink-800" />
               </div>
-              <span className="ml-1">テーブル</span>
+              <span className="ml-1" data-testid="label-table">
+                テーブル
+              </span>
             </div>
             <div>
               {tables.length > 0 &&
@@ -666,6 +704,7 @@ const PostRegist: React.FC = () => {
               <input
                 className={`${styles.area_input} ml-5 md:ml-10 shadow bg-black placeholder-gray-500 appearance-none rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
                 id="table"
+                data-testid="input-table"
                 type="text"
                 value={table}
                 placeholder="FLEXISPOT スタンディングデスク"
@@ -679,7 +718,10 @@ const PostRegist: React.FC = () => {
               />
             </div>
             {errors.table && (
-              <p className="text-red-500 text-xs italic text-center">
+              <p
+                className="text-red-500 text-xs italic text-center"
+                role="alert"
+              >
                 {errors.table.message}
               </p>
             )}
@@ -698,7 +740,9 @@ const PostRegist: React.FC = () => {
               <div className="bg-yellow-200 px-2 py-2 rounded-full">
                 <GiOfficeChair className="text-yellow-900" />
               </div>
-              <span className="ml-1">チェア</span>
+              <span className="ml-1" data-testid="label-chair">
+                チェア
+              </span>
             </div>
             <div>
               {chairs.length > 0 &&
@@ -713,6 +757,7 @@ const PostRegist: React.FC = () => {
               <input
                 className={`${styles.area_input} ml-5 md:ml-10 shadow bg-black placeholder-gray-500 appearance-none rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
                 id="chair"
+                data-testid="input-chair"
                 type="text"
                 value={chair}
                 placeholder="AKRacing Pro-X V2"
@@ -726,7 +771,10 @@ const PostRegist: React.FC = () => {
               />
             </div>
             {errors.chair && (
-              <p className="text-red-500 text-xs italic text-center">
+              <p
+                className="text-red-500 text-xs italic text-center"
+                role="alert"
+              >
                 {errors.chair.message}
               </p>
             )}
@@ -745,7 +793,9 @@ const PostRegist: React.FC = () => {
               <div className="bg-thin-gray px-2 py-2 rounded-full">
                 <FaHeadphones className="text-gray" />
               </div>
-              <span className="ml-1">その他</span>
+              <span className="ml-1" data-testid="label-other">
+                その他
+              </span>
             </div>
             <div>
               {others.length > 0 &&
@@ -760,6 +810,7 @@ const PostRegist: React.FC = () => {
               <input
                 className={`${styles.area_input} ml-5 md:ml-10 shadow bg-black placeholder-gray-500 appearance-none rounded py-2 px-3 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer`}
                 id="other"
+                data-testid="input-other"
                 type="text"
                 value={other}
                 placeholder="SONY WH-1000XM4"
@@ -773,7 +824,10 @@ const PostRegist: React.FC = () => {
               />
             </div>
             {errors.other && (
-              <p className="text-red-500 text-xs italic text-center">
+              <p
+                className="text-red-500 text-xs italic text-center"
+                role="alert"
+              >
                 {errors.other.message}
               </p>
             )}
@@ -792,7 +846,9 @@ const PostRegist: React.FC = () => {
         <div
           className={`${styles.btn} bg-black py-8 cursor-pointer rounded-b text-center`}
         >
-          <button type="submit">投稿する</button>
+          <button type="submit" data-testid="button-regist">
+            投稿する
+          </button>
         </div>
       </div>
     </form>

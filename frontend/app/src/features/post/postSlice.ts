@@ -18,7 +18,7 @@ import {
 const apiUrl = process.env.REACT_APP_DEV_API_URL;
 const apiUrlPost = `${process.env.REACT_APP_DEV_API_URL}api/post/`;
 const apiUrlMyPost = `${process.env.REACT_APP_DEV_API_URL}api/mypost/`;
-const apiUrlPostImage = `${process.env.REACT_APP_DEV_API_URL}api/postImage/`;
+const apiUrlPostImage = `${process.env.REACT_APP_DEV_API_URL}api/post-image/`;
 const apiUrlComment = `${process.env.REACT_APP_DEV_API_URL}api/comment/`;
 
 const initialState: POST_STATE = {
