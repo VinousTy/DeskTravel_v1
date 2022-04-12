@@ -1,0 +1,96 @@
+.aspect {
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+  aspect-ratio: 4/3;
+}
+
+.border {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    #fd0000 0%,
+    #ff5e00 25%,
+    #ffd900 35%,
+    #006eff 50%,
+    #ffd900 65%,
+    #ff5e00 75%,
+    #fd0000 100%
+  );
+  border: none;
+}
+
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  background: #fff;
+  content: '';
+  height: 200px;
+  left: -90px;
+  opacity: 0.2;
+  position: absolute;
+  top: -63px;
+  -webkit-transform: rotate(41deg);
+  transform: rotate(41deg);
+  -webkit-transition: all 350ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 350ms cubic-bezier(0.19, 1, 0.22, 1);
+  width: 50px;
+  z-index: 1;
+}
+
+.btn:hover::after {
+  left: 120%;
+  -webkit-transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.text_area {
+  width: 88%;
+}
+
+.area_box {
+  width: 50%;
+}
+
+.area_input {
+  width: 75%;
+}
+
+.add_btn_box {
+  text-align: right;
+  width: 85%;
+  color: #006eff;
+  margin-bottom: 12px;
+}
+
+.add_btn {
+  text-decoration: underline;
+  text-decoration-color: #006eff;
+  transition: all 0.3s;
+  font-size: 12px;
+}
+
+.add_btn:hover {
+  text-decoration: none;
+  color: #69a5f5;
+}
+
+@media screen and (max-width: 768px) {
+  .area_box {
+    width: 90%;
+  }
+
+  .area_input {
+    width: 96%;
+  }
+
+  .add_btn_box {
+    text-align: right;
+    width: 96%;
+    color: #006eff;
+    margin: 0 0 10px 20px;
+  }
+}

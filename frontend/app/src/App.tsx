@@ -1,11 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.module.scss';
+import 'sanitize.css';
+import styles from './App.module.scss';
 import Router from './Router';
 
 function App() {
   return (
-    <div className="App">
+    <div className={styles.container}>
       <Router />
     </div>
   );
