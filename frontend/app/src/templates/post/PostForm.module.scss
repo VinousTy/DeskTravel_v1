@@ -47,6 +47,58 @@
   transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+.item_btn {
+  --purple: #6e00fd;
+  font-size: 15px;
+  padding: 0.7em 2.2em;
+  margin-bottom: 40px;
+  letter-spacing: 0.06em;
+  position: relative;
+  font-family: inherit;
+  border-radius: 0.6em;
+  overflow: hidden;
+  transition: all 0.3s;
+  line-height: 1.4em;
+  border: 2px solid var(--purple);
+  background: linear-gradient(
+    to right,
+    rgba(27, 253, 156, 0.1) 1%,
+    transparent 40%,
+    transparent 60%,
+    rgba(27, 253, 156, 0.1) 100%
+  );
+  color: rgb(161, 31, 247);
+  box-shadow: inset 0 0 10px rgba(174, 4, 241, 0.4),
+    0 0 9px 3px rgba(27, 253, 156, 0.1);
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: -4em;
+    width: 4em;
+    height: 100%;
+    top: 0;
+    transition: transform 0.4s ease-in-out;
+    background: linear-gradient(
+      to right,
+      transparent 1%,
+      rgba(132, 27, 253, 0.096) 40%,
+      rgba(132, 27, 253, 0.1) 60%,
+      transparent 100%
+    );
+  }
+
+  &:hover {
+    color: #b882ff;
+    box-shadow: inset 0 0 10px rgba(132, 27, 253, 0.6),
+      0 0 9px 3px rgba(27, 253, 156, 0.2);
+  }
+
+  &:hover:before {
+    transform: translateX(15em);
+  }
+}
+
 .text_area {
   width: 88%;
 }
