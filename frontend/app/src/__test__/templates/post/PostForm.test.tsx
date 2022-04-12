@@ -9,6 +9,10 @@ import authReducer from '../../../features/auth/authSlice';
 import postReducer from '../../../features/post/postSlice';
 import { act } from 'react-dom/test-utils';
 import PostRegist from '../../../templates/post/PostRegist';
+import PostEdit from '../../../templates/post/PostEdit';
+import { MemoryRouter } from 'react-router';
+import { Router } from 'react-router';
+import { createMemoryHistory } from 'history';
 
 const apiUrl = process.env.REACT_APP_DEV_API_URL;
 
@@ -106,7 +110,7 @@ afterAll(() => {
   server.close();
 });
 
-describe('PostRegist Components Test Cases', () => {
+describe('PostForm Components Test Cases', () => {
   let store: any;
   beforeEach(() => {
     store = configureStore({
@@ -175,6 +179,80 @@ describe('PostRegist Components Test Cases', () => {
     render(
       <Provider store={store}>
         <PostRegist />
+      </Provider>
+    );
+    await act(async () => {
+      fireEvent.submit(screen.getByTestId('button-regist'));
+    });
+    expect(await mockHistoryPush).not.toBeCalledWith('/post/list');
+  });
+  it('PostRegistですべての要素を正しくレンダリングできているか確認', async () => {
+    const history = createMemoryHistory();
+    history.push('/post/edit/1');
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <PostEdit />
+        </Router>
+      </Provider>
+    );
+    expect(screen.getByTestId('label-body')).toBeTruthy();
+    userEvent.click(screen.getByTestId('button-item'));
+    await act(async () => {
+      expect(screen.getByTestId('label-monitor')).toBeTruthy();
+      expect(screen.getByTestId('label-computer')).toBeTruthy();
+      expect(screen.getByTestId('label-keyboard')).toBeTruthy();
+      expect(screen.getByTestId('label-mouse')).toBeTruthy();
+      expect(screen.getByTestId('label-speaker')).toBeTruthy();
+      expect(screen.getByTestId('label-table')).toBeTruthy();
+      expect(screen.getByTestId('label-chair')).toBeTruthy();
+      expect(screen.getByTestId('label-other')).toBeTruthy();
+      expect(screen.getByTestId('input-body')).toBeTruthy();
+      expect(screen.getByTestId('input-monitor')).toBeTruthy();
+      expect(screen.getByTestId('input-computer')).toBeTruthy();
+      expect(screen.getByTestId('input-keyboard')).toBeTruthy();
+      expect(screen.getByTestId('input-mouse')).toBeTruthy();
+      expect(screen.getByTestId('input-speaker')).toBeTruthy();
+      expect(screen.getByTestId('input-table')).toBeTruthy();
+      expect(screen.getByTestId('input-chair')).toBeTruthy();
+      expect(screen.getByTestId('input-other')).toBeTruthy();
+      expect(screen.getByTestId('button-regist')).toBeTruthy();
+    });
+  });
+  it('入力する値が無効の場合エラーを表示', async () => {
+    render(
+      <Provider store={store}>
+        <PostEdit />
+      </Provider>
+    );
+    userEvent.click(screen.getByTestId('button-item'));
+    await act(async () => {
+      userEvent.type(screen.getByTestId('input-monitor'), 'monitor');
+      userEvent.type(screen.getByTestId('input-computer'), 'computer');
+      userEvent.type(screen.getByTestId('input-keyboard'), 'keyboard');
+      userEvent.type(screen.getByTestId('input-mouse'), 'mouse');
+      userEvent.type(screen.getByTestId('input-speaker'), 'speaker');
+      userEvent.type(screen.getByTestId('input-table'), 'table');
+      userEvent.type(screen.getByTestId('input-chair'), 'chair');
+      userEvent.type(screen.getByTestId('input-other'), 'other');
+    });
+    await act(async () => {
+      fireEvent.submit(screen.getByTestId('button-regist'));
+    });
+    expect(await screen.findAllByRole('alert')).toHaveLength(9);
+    expect(mockHistoryPush).not.toBeCalledWith('/post/list');
+  });
+  it('投稿作成に失敗した際にページ遷移しないことを確認', async () => {
+    server.use(
+      rest.post(`${apiUrl}api/post/1`, (req, res, ctx) => {
+        return res(ctx.status(400));
+      })
+    );
+    render(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[{ pathname: '/post/edit/1' }]}>
+          <PostEdit />
+        </MemoryRouter>
       </Provider>
     );
     await act(async () => {
