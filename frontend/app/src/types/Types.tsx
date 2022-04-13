@@ -213,3 +213,12 @@ export interface UPDATE_ITEM {
   name: string[];
   postId: any;
 }
+
+export interface PROPS_POST_LIST {
+  postId: number;
+  loginId: number;
+  userPost: number;
+  body: string;
+  liked: number[];
+  bookmark: number[];
+}
