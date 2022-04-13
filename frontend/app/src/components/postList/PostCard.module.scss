@@ -1,0 +1,28 @@
+.card_container {
+  margin: 20px 0;
+  background-color: #222;
+  color: #fff;
+}
+
+.img {
+  width: 30%;
+  height: 30%;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.comment_avatar {
+  display: none;
+}
+
+.hr {
+  margin-bottom: 3px;
+  height: 1px;
+  background: rgb(80, 79, 79);
+  border: none;
+}
+
+.input {
+  white-space: normal;
+  word-break: normal;
+}
