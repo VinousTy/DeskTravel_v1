@@ -1,0 +1,68 @@
+.flex_container {
+  height: 450px;
+}
+
+.container_bg {
+  background-color: rgb(54, 54, 54);
+}
+
+.scroll_box {
+  height: 75%;
+  overflow: scroll;
+}
+
+.edit_btn_box {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+}
+
+.computer_bg {
+  background-color: rgb(255, 230, 183);
+}
+
+.computer {
+  color: rgb(226, 147, 0);
+}
+
+.mouse_bg {
+  background-color: rgb(179, 255, 198);
+}
+
+.mouse {
+  color: rgb(0, 185, 46);
+}
+
+.other_bg {
+  background-color: rgb(175, 175, 175);
+}
+
+.other {
+  color: rgb(100, 99, 99);
+}
+
+.border {
+  height: 1px;
+  background-color: gray;
+  border: none;
+}
+
+.img_sm {
+  width: 100%;
+  border: outset 10px rgb(48, 47, 47);
+}
+
+.img {
+  width: 60%;
+  border: outset 10px rgb(48, 47, 47);
+}
+
+.device_name {
+  margin-left: 70px;
+}
+.category {
+  background-color: #fff;
+  color: #222;
+  padding: 8px;
+  border-radius: 20px;
+}

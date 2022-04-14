@@ -222,3 +222,13 @@ export interface PROPS_POST_LIST {
   liked: number[];
   bookmark: number[];
 }
+
+export interface PROPS_POST_DETAIL {
+  id: number;
+  postId: number;
+  loginId: number;
+  userPost: number;
+  body: string;
+  liked: number[];
+  bookmark: number[];
+}
