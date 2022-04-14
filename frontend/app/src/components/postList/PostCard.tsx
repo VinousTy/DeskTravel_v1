@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import styles from './PostCard.module.scss';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -245,7 +246,7 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
             </h6>
           </div>
         </div>
-        {img[0].img ? (
+        {img[0]?.img ? (
           <CardMedia
             className={classes.media}
             image={img[0]?.img}
@@ -259,7 +260,6 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
           <IconButton
             className={classes.iconButton}
             aria-label="add to favorites"
-            data-testid="like-icon"
           >
             <Checkbox
               className={`${classes.iconButton} text-white`}
@@ -267,8 +267,12 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
               checkedIcon={<Favorite />}
               checked={liked.some((like) => like === loginId)}
               onChange={handlerLiked}
+              data-testid="like-icon"
             />
-            <span className="font-extralight pb-2 text-white ml-1">
+            <span
+              className="font-extralight pb-2 text-white ml-1"
+              data-testid="like"
+            >
               {liked.length}
             </span>
           </IconButton>
@@ -278,11 +282,12 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
               {commentsOnPost.length}
             </span>
           </IconButton>
-          <IconButton aria-label="bookmark" data-testid="bookmark-icon">
+          <IconButton aria-label="bookmark">
             <Checkbox
               className={`${classes.iconButton} text-white`}
               icon={<BookmarkBorderIcon className="text-white" />}
               checkedIcon={<BookmarkIcon className="text-green-500" />}
+              data-testid="bookmark-icon"
               checked={bookmark.some((bookmark) => bookmark === loginId)}
               onChange={handlerBookmark}
             />
@@ -308,6 +313,7 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
                     className={`text-white ${clsx(classes.comment, {
                       [classes.expandOpen]: expanded,
                     })}`}
+                    data-testid="button-comment-open"
                   />
                 </IconButton>
               )}
@@ -319,14 +325,23 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
         ) : (
           <>
             <hr className={styles.hr} />
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Collapse
+              in={expanded}
+              timeout="auto"
+              unmountOnExit
+              data-testid="comment"
+            >
               <CardContent>
                 <div className="py-2">
                   {commentsOnPost.length === 0 ? (
                     <div>コメントはありません</div>
                   ) : (
                     commentsOnPost.reverse().map((comment) => (
-                      <div key={comment.id} className="flex items-center">
+                      <div
+                        key={comment.id}
+                        className="flex items-center"
+                        data-testid="comment-list"
+                      >
                         <Avatar
                           src={
                             profiles.find(
@@ -381,6 +396,7 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
                 <>
                   <textarea
                     className="flex-auto py-2 bg-transparent outline-none"
+                    data-testid="input-comment"
                     rows={1}
                     placeholder="コメント入力"
                     value={text}
@@ -391,6 +407,7 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
                     className="bg-transparent mr-1 text-blue-500"
                     type="submit"
                     onClick={submitComment}
+                    data-testid="button-comment"
                   >
                     送信
                   </button>
