@@ -4,6 +4,7 @@ import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import SignIn from './templates/auth/SignIn';
 import SignUp from './templates/auth/SignUp';
+import PostDetail from './templates/post/PostDetail';
 import PostEdit from './templates/post/PostEdit';
 import PostList from './templates/post/PostList';
 import PostRegist from './templates/post/PostRegist';
@@ -20,6 +21,7 @@ const Router = () => {
         <Route exact path="/post/regist" component={PostRegist} />
         <Route path={'/post/edit(/:id)?'} component={PostEdit} />
         <Route exact path="/post/list" component={PostList} />
+        <Route path={'/post/detail(/:id)?'} component={PostDetail} />
       </Switch>
       <Footer />
     </BrowserRouter>
