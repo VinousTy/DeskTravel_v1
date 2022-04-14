@@ -187,6 +187,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
   };
 
   const handlerLiked = async () => {
+    let isMounted = true;
     const packet = {
       id: postId,
       body: body,
@@ -211,6 +212,9 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
       await dispatch(patchLiked(packet));
     }
     await dispatch(isLoadingPostEnd);
+    return () => {
+      isMounted = false;
+    };
   };
 
   const handlerBookmark = async () => {
@@ -250,9 +254,13 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               isWide ? { width: 60, height: 60 } : { width: 90, height: 90 }
             }
             className="ml-10 pt-0 md:mt-4 md:ml-20"
+            data-testid="avatar"
           />
           <div className="md:mt-4">
-            <div className="font-bold text-lg ml-6 md:ml-10 md:mt-2">
+            <div
+              className="font-bold text-lg ml-6 md:ml-10 md:mt-2"
+              data-testid="name"
+            >
               {prof[0]?.name}
             </div>
             <div
@@ -269,7 +277,10 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
                 </span>
               )}
             </div>
-            <div className="text-gray-500 ml-6 md:mt-2 md:mb-4 md:ml-10">
+            <div
+              className="text-gray-500 ml-6 md:mt-2 md:mb-4 md:ml-10"
+              data-testid="user_name"
+            >
               @{prof[0]?.user_name}
             </div>
           </div>
@@ -337,19 +348,19 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
             <img className={styles.img} src={img[0]?.img} alt="投稿画像" />
             <div className="mt-5 mx-2 w-2/5">
               <div className={styles.scroll_box}>
-                <div className="mb-4">
+                <div className="mb-4" data-testid="category">
                   {arry.map((arr) => (
                     <span key={arr.id} className={styles.category}>
                       {arr.name}
                     </span>
                   ))}
                 </div>
-                {body}
+                <span data-testid="body">{body}</span>
                 <hr className={`${styles.border} mt-2`} />
                 <div className="mt-2">コメント</div>
 
                 <div className={`text-white rounded`}>
-                  <div className="py-2 mb-2">
+                  <div className="py-2 mb-2" data-testid="comment">
                     {commentsOnPost.length === 0 ? (
                       <div>コメントはありません</div>
                     ) : (
@@ -400,6 +411,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
                       icon={<FavoriteBorderIcon className="text-white" />}
                       checkedIcon={<Favorite />}
                       checked={liked.some((like) => like === loginId)}
+                      data-testid="like-icon"
                       onChange={handlerLiked}
                     />
                     <span className="font-extralight text-white">
@@ -420,6 +432,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
                       checked={bookmark.some(
                         (bookmark) => bookmark === loginId
                       )}
+                      data-testid="bookmark-icon"
                       onChange={handlerBookmark}
                     />
                     <span className="font-extralight text-white mr-8">
@@ -454,12 +467,14 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
                       rows={1}
                       placeholder="コメント入力"
                       value={text}
+                      data-testid="input-comment"
                       onChange={(e) => setText(e.target.value)}
                     />
                     <button
                       disabled={!text.length}
                       className="bg-transparent mr-1 text-blue-500"
                       type="submit"
+                      data-testid="button-comment"
                       onClick={submitComment}
                     >
                       送信
@@ -484,7 +499,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               </div>
               <span className="ml-1 font-bold">モニター</span>
             </div>
-            <div>
+            <div data-testid="monitor">
               {monitor[0]?.name.split(',').map((name, i) => (
                 <p key={i} className="ml-14 md:ml-16 md:pl-3">
                   {name}
@@ -499,7 +514,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               </div>
               <span className="ml-1 font-bold">コンピューター</span>
             </div>
-            <div>
+            <div data-testid="computer">
               {computer[0]?.name.split(',').map((name, i) => (
                 <p key={i} className="ml-14 md:ml-16 md:pl-3">
                   {name}
@@ -514,7 +529,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               </div>
               <span className="ml-1 font-bold">キーボード</span>
             </div>
-            <div>
+            <div data-testid="keyboard">
               {keyboard[0]?.name.split(',').map((name, i) => (
                 <p key={i} className="ml-14 md:ml-16 md:pl-3">
                   {name}
@@ -531,7 +546,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               </div>
               <span className="ml-1 font-bold">マウス</span>
             </div>
-            <div>
+            <div data-testid="mouse">
               {mouse[0]?.name.split(',').map((name, i) => (
                 <p key={i} className="ml-14 md:ml-16 md:pl-3">
                   {name}
@@ -546,7 +561,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               </div>
               <span className="ml-1 font-bold">スピーカー</span>
             </div>
-            <div>
+            <div data-testid="speaker">
               {speaker[0]?.name.split(',').map((name, i) => (
                 <p key={i} className="ml-14 md:ml-16 md:pl-3">
                   {name}
@@ -561,7 +576,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               </div>
               <span className="ml-1 font-bold">テーブル</span>
             </div>
-            <div>
+            <div data-testid="table">
               {table[0]?.name.split(',').map((name, i) => (
                 <p key={i} className="ml-14 md:ml-16 md:pl-3">
                   {name}
@@ -576,7 +591,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               </div>
               <span className="ml-1 font-bold">チェア</span>
             </div>
-            <div>
+            <div data-testid="chair">
               {chair[0]?.name.split(',').map((name, i) => (
                 <p key={i} className="ml-14 md:ml-16 md:pl-3">
                   {name}
@@ -591,7 +606,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
               </div>
               <span className="ml-1 font-bold">その他機器</span>
             </div>
-            <div>
+            <div data-testid="other">
               {other[0]?.name.split(',').map((name, i) => (
                 <p key={i} className="ml-14 md:ml-16 md:pl-3">
                   {name}
