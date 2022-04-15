@@ -5,6 +5,9 @@ import { getPosts, selectPosts } from '../../features/post/postSlice';
 import { getProfiles, selectProfile } from '../../features/auth/authSlice';
 import Detail from '../../components/detail/Detail';
 import { AppDispatch } from '../../app/store';
+import NewPostModal from '../../components/postModal/NewPostModal';
+import EditPostModal from '../../components/postModal/EditPostModal';
+import DeletePostModal from '../../components/postModal/DeletePostModal';
 
 const PostDetail: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -26,6 +29,9 @@ const PostDetail: React.FC = () => {
 
   return (
     <div className="md:w-10/12 mt-10 mb-10 md:w-8/12 mx-auto md:h-auto text-white rounded">
+      <NewPostModal />
+      <EditPostModal />
+      <DeletePostModal />
       {posts.map((post) => {
         if (post.id === Number(id))
           return (
