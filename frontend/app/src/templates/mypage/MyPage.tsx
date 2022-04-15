@@ -18,6 +18,7 @@ import {
   selectPosts,
 } from '../../features/post/postSlice';
 import MyPostList from '../../components/postList/myPostList/MyPostList';
+import NewPostModal from '../../components/postModal/NewPostModal';
 
 interface POST_BOOKMARK {
   id: number;
@@ -65,6 +66,7 @@ const MyPage: React.FC = () => {
       <div
         className={`${styles.container} w-10/12 mt-10 mb-10 pt-2 md:w-8/12 mx-auto md:pt-14 md:h-auto text-white bg-thin-black rounded`}
       >
+        <NewPostModal />
         <ProfileList
           id={profile.id}
           name={profile.name}
