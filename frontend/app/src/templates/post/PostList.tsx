@@ -15,6 +15,7 @@ import {
 import { AppDispatch } from '../../app/store';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import NewPostModal from '../../components/postModal/NewPostModal';
 
 const PostList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -89,6 +90,7 @@ const PostList: React.FC = () => {
           className={styles.serach_icon}
         />
       </form>
+      <NewPostModal />
       <div
         className={`${styles.flex_container} flex mx-4 flex-wrap justify-between`}
       >
