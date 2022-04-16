@@ -1,0 +1,33 @@
+.brackets li {
+  list-style-type: none;
+  counter-increment: cnt;
+
+  &:before {
+    content: '(' counter(cnt) ') ';
+  }
+}
+
+.brackets_circle {
+  counter-reset: number;
+  color: #fff;
+  margin-left: 2%;
+
+  & li {
+    line-height: 1.5em;
+    display: flex;
+    align-items: center;
+
+    &:before {
+      content: counter(number);
+      counter-increment: number;
+      text-align: center;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      width: 1em;
+      height: 1em;
+      line-height: 0.5;
+      font-size: 1em;
+      margin-right: 0.5rem;
+    }
+  }
+}
