@@ -4,6 +4,7 @@ import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import SignIn from './templates/auth/SignIn';
 import SignUp from './templates/auth/SignUp';
+import Home from './templates/home/Home';
 import MyPage from './templates/mypage/MyPage';
 import PostDetail from './templates/post/PostDetail';
 import PostEdit from './templates/post/PostEdit';
@@ -24,6 +25,7 @@ const Router = () => {
         <Route exact path="/post/list" component={PostList} />
         <Route path={'/post/detail(/:id)?'} component={PostDetail} />
         <Route exact path="/mypage" component={MyPage} />
+        <Route exact path="/home" component={Home} />
       </Switch>
       <Footer />
     </BrowserRouter>
