@@ -5,6 +5,14 @@ from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from . import serializers
 from .models import User, Profile, Post, Comments, Category, PostImage, Monitor, Computer, Keyboard, Mouse, Speaker, Table, Chair, Other
+import environ
+from django.core.mail import EmailMultiAlternatives
+from django.dispatch import receiver
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django_rest_passwordreset.signals import reset_password_token_created
+env = environ.Env()
+env.read_env('.env')
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -15,6 +23,27 @@ class CreateUserView(generics.CreateAPIView):
 class UserView(viewsets.ModelViewSet):
   queryset = User.objects.all()
   serializer_class = serializers.UserSerializer
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+  context = {
+      'current_user': reset_password_token.user,
+      'email': reset_password_token.user.email,
+      'reset_password_url': "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
+  }
+
+  email_plaintext_message = render_to_string(
+      'email/user_reset_password.txt', context)
+
+  msg = EmailMultiAlternatives(
+      "「DeskTravel」パスワード変更のお知らせ",
+      email_plaintext_message,
+      "noreply@somehost.local",
+      [reset_password_token.user.email]
+  )
+  print(msg)
+  msg.send()
 
 
 class ProfileView(viewsets.ModelViewSet):
