@@ -12,6 +12,8 @@ import {
 } from '../../types/Types';
 
 const apiUrl = process.env.REACT_APP_DEV_API_URL;
+const drfClientId = process.env.REACT_APP_DRF_CLIENT_ID;
+const drfClientSecret = process.env.REACT_APP_DRF_CLIENT_SECRET;
 
 const initialState: AUTH_STATE = {
   signIn: false,
@@ -104,6 +106,20 @@ export const deleteUser = createAsyncThunk(
         'Content-Type': 'application/json',
         Authorization: `JWT ${localStorage.localJWT}`,
       },
+    });
+    return res.data;
+  }
+);
+
+export const googleLogin = createAsyncThunk(
+  'auth/social',
+  async (response: any) => {
+    const res = await axios.post(`${apiUrl}auth/convert-token`, {
+      token: response.accessToken,
+      backend: 'google-oauth2',
+      grant_type: 'convert_token',
+      client_id: drfClientId,
+      client_secret: drfClientSecret,
     });
     return res.data;
   }
@@ -213,6 +229,10 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loginEmail.fulfilled, (state, action) => {
       localStorage.setItem('localJWT', action.payload.access);
+    });
+    builder.addCase(googleLogin.fulfilled, (state, action) => {
+      localStorage.setItem('access_token', action.payload.access_token);
+      localStorage.setItem('refresh_token', action.payload.refresh_token);
     });
     builder.addCase(postEmail.fulfilled, (state, action) => {
       state.isEmail = true;
