@@ -4,16 +4,23 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/store';
-import { loginEmail, isSignIn } from '../../features/auth/authSlice';
+import {
+  loginEmail,
+  isSignIn,
+  googleLogin,
+} from '../../features/auth/authSlice';
 import { BsGoogle } from 'react-icons/bs';
 import { BsTwitter } from 'react-icons/bs';
 import Swal from 'sweetalert2';
+import GoogleLogin from 'react-google-login';
 
 interface INPUTS {
   email: string;
   password: string;
   confirm_password: string;
 }
+
+const googleClientId = String(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
 const SignIn: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -25,6 +32,21 @@ const SignIn: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<INPUTS>();
+
+  const handleGoogleLogin = async (response: any) => {
+    const resultReg = await dispatch(googleLogin(response));
+    if (googleLogin.fulfilled.match(resultReg)) {
+      await history.push('/home');
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'ユーザー登録失敗',
+        text: 'Google登録時にエラーが発生しました。時間を置いてから再度お試しください。',
+        color: '#fff',
+        background: '#222',
+      });
+    }
+  };
 
   const onSubmit: SubmitHandler<INPUTS> = async (data) => {
     const result = await dispatch(loginEmail(data));
@@ -107,15 +129,24 @@ const SignIn: React.FC = () => {
           </div>
           <div className={styles.separation}>または</div>
           <div className="mt-6 mb-6">
-            <button
-              type="button"
-              className="w-10/12 md:w-9/12 py-2 px-3 bg-secondary hover:bg-red-800 transition-all mt-5 mb-5 text-white font-bold py-2 px-4 rounded"
-            >
-              <span className="flex justify-between md:justify-center">
-                <BsGoogle className="mt-1 font md:mr-4" />
-                <span className="md:t">Googleアカウントでログイン</span>
-              </span>
-            </button>
+            <GoogleLogin
+              clientId={googleClientId}
+              buttonText="LOGIN WITH GOOGLE"
+              onSuccess={(response) => handleGoogleLogin(response)}
+              render={(renderProps) => (
+                <button
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                  type="button"
+                  className="w-10/12 md:w-9/12 py-2 px-3 bg-secondary hover:bg-red-800 transition-all mt-5 mb-5 text-white font-bold py-2 px-4 rounded"
+                >
+                  <span className="flex justify-between md:justify-center">
+                    <BsGoogle className="mt-1 font md:mr-4" />
+                    <span className="md:t">Googleアカウントでログイン</span>
+                  </span>
+                </button>
+              )}
+            />
           </div>
           <div
             className="mb-6"
