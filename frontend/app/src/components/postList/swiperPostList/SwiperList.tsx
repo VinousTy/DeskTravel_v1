@@ -181,14 +181,21 @@ const SwiperList: React.FC<PROPS_POST_LIST> = ({
             avatar={
               <Avatar
                 src={prof[0]?.img === undefined ? '' : prof[0]?.img}
+                data-testid="avatar"
               ></Avatar>
             }
           />
           <div className="mt-3">
-            <h5 className="text-left">{prof[0]?.name}</h5>
+            <h5 className="text-left" data-testid="name">
+              {prof[0]?.name}
+            </h5>
             <h6 className="text-gray-500">
               {userCategory.map((category) => (
-                <span key={category.id} className={styles.category}>
+                <span
+                  key={category.id}
+                  className={styles.category}
+                  data-testid="category"
+                >
                   {category.name}
                 </span>
               ))}
@@ -200,6 +207,7 @@ const SwiperList: React.FC<PROPS_POST_LIST> = ({
             className={classes.media}
             image={img[0]?.img}
             onClick={() => history.push(`/post/detail/${postId}`)}
+            data-testid="image"
           />
         ) : (
           <></>
@@ -212,12 +220,16 @@ const SwiperList: React.FC<PROPS_POST_LIST> = ({
               checkedIcon={<Favorite />}
               checked={liked.some((like) => like === loginId)}
               onChange={handlerLiked}
+              data-testid="like-icon"
             />
-            <span className="font-extralight text-white ml-1">
+            <span
+              className="font-extralight text-white ml-1"
+              data-testid="like"
+            >
               {liked.length}
             </span>
           </IconButton>
-          <IconButton aria-label="comment">
+          <IconButton aria-label="comment" data-testid="comments-icon">
             <ChatBubbleOutlineIcon className="text-white" />
             <span className="font-extralight text-white ml-1">
               {commentsOnPost.length}
@@ -229,9 +241,13 @@ const SwiperList: React.FC<PROPS_POST_LIST> = ({
               icon={<BookmarkBorderIcon className="text-white" />}
               checkedIcon={<BookmarkIcon className="text-green-500" />}
               checked={bookmark.some((bookmark) => bookmark === loginId)}
+              data-testid="bookmark-icon"
               onChange={handlerBookmark}
             />
-            <span className="font-extralight text-white ml-1">
+            <span
+              className="font-extralight text-white ml-1"
+              data-testid="bookmark"
+            >
               {bookmark.length}
             </span>
           </IconButton>
