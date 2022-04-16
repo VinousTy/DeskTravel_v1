@@ -13,6 +13,8 @@ import PostRegist from './templates/post/PostRegist';
 import Profile from './templates/profile/Profile';
 import TermsOfService from './templates/termsOfService/TermsOfService';
 import PrivacyPolicy from './templates/privacyPolicy/PrivacyPolicy';
+import EmailPost from './templates/auth/EmailPost';
+import PasswordReset from './templates/auth/PasswordReset';
 
 const Router = () => {
   return (
@@ -21,6 +23,8 @@ const Router = () => {
       <Switch>
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/reset" component={EmailPost} />
+        <Route path={'/password/reset(/?token=)?'} component={PasswordReset} />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/post/regist" component={PostRegist} />
         <Route path={'/post/edit(/:id)?'} component={PostEdit} />
