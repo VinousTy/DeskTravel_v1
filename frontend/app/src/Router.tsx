@@ -10,6 +10,7 @@ import PostDetail from './templates/post/PostDetail';
 import PostEdit from './templates/post/PostEdit';
 import PostList from './templates/post/PostList';
 import PostRegist from './templates/post/PostRegist';
+import PrivacyPolicy from './templates/privacyPolicy/PrivacyPolicy';
 import Profile from './templates/profile/Profile';
 
 const Router = () => {
@@ -26,6 +27,7 @@ const Router = () => {
         <Route path={'/post/detail(/:id)?'} component={PostDetail} />
         <Route exact path="/mypage" component={MyPage} />
         <Route exact path="/home" component={Home} />
+        <Route exact path="/privacy" component={PrivacyPolicy} />
       </Switch>
       <Footer />
     </BrowserRouter>
