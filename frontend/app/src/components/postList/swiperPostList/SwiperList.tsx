@@ -239,7 +239,7 @@ const SwiperList: React.FC<PROPS_POST_LIST> = ({
             <Checkbox
               className="text-white"
               icon={<BookmarkBorderIcon className="text-white" />}
-              checkedIcon={<BookmarkIcon className="text-green-500" />}
+              checkedIcon={<BookmarkIcon className="text-green" />}
               checked={bookmark.some((bookmark) => bookmark === loginId)}
               data-testid="bookmark-icon"
               onChange={handlerBookmark}
