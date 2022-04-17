@@ -52,7 +52,9 @@ const PasswordReset: React.FC = () => {
         <div
           className={`w-10/12 mt-10 mb-10 md:w-4/12 mx-auto pt-14 text-center text-white h-auto bg-thin-black rounded`}
         >
-          <h2 className="mb-10 text-xl font-bold">パスワード再設定</h2>
+          <h2 className="mb-10 text-xl font-bold" data-testid="title">
+            パスワード再設定
+          </h2>
           <div className="w-9/12 mx-auto mb-8">
             <p>
               新しいパスワードを入力して「パスワード再設定」をクリックしてください。
@@ -66,6 +68,7 @@ const PasswordReset: React.FC = () => {
               className="shadow bg-black placeholder-gray-500 appearance-none rounded w-9/12 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               id="password"
               type="password"
+              data-testid="input-password"
               placeholder="新しいパスワードを入力"
               {...register('password', {
                 required: {
@@ -92,6 +95,7 @@ const PasswordReset: React.FC = () => {
               className="md:shadow bg-black placeholder-gray-500 appearance-none rounded w-9/12 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               id="confirm_password"
               type="password"
+              data-testid="input-password-confirm"
               placeholder="パスワード再入力"
               {...register('confirm_password', {
                 required: {
@@ -110,7 +114,7 @@ const PasswordReset: React.FC = () => {
               })}
             />
             {errors.confirm_password && (
-              <p className="text-red-500 text-xs italic">
+              <p className="text-red-500 text-xs italic" role="alert">
                 {errors.confirm_password.message}
               </p>
             )}
@@ -119,7 +123,9 @@ const PasswordReset: React.FC = () => {
           <div
             className={`${styles.btn} bg-black py-8 cursor-pointer rounded-b`}
           >
-            <button type="submit">パスワード再設定</button>
+            <button type="submit" data-testid="button-submit">
+              パスワード再設定
+            </button>
           </div>
         </div>
       </div>
