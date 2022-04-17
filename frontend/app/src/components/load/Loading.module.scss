@@ -1,0 +1,118 @@
+.loading_wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  animation: bgAnime 1s linear 1.8s forwards;
+}
+
+.loading_text {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: rgb(90, 6, 158);
+  width: 100px;
+  height: 30px;
+  margin: -7px 0 0 -45px;
+  text-align: center;
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-size: 20px;
+  text-shadow: 0 0 7px rgb(252, 73, 73), 0 0 10px rgb(240, 77, 77),
+    0 0 21px rgb(252, 53, 53), 0 0 42px rgb(245, 176, 73),
+    0 0 82px rgb(245, 176, 73), 0 0 92px rgb(245, 176, 73),
+    0 0 102px rgb(245, 176, 73), 0 0 151px rgb(245, 176, 73);
+}
+
+.loading_content {
+  display: block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  width: 170px;
+  height: 170px;
+  margin: -85px 0 0 -85px;
+  border: 3px solid rgb(248, 90, 90);
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    right: 15px;
+    top: 15px;
+    bottom: 15px;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+  }
+}
+
+.loading_content {
+  border: 3px solid transparent;
+  border-top-color: #8c00ff;
+  border-bottom-color: #8c00ff;
+  border-radius: 50%;
+  -webkit-animation: loader 2s linear infinite;
+  -moz-animation: loader 2s linear infinite;
+  -o-animation: loader 2s linear infinite;
+  animation: loader 2s linear infinite;
+
+  &:before {
+    border: 3px solid transparent;
+    border-top-color: #557cfa;
+    border-bottom-color: #557cfa;
+    border-radius: 50%;
+    -webkit-animation: loader 3s linear infinite;
+    -moz-animation: loader 2s linear infinite;
+    -o-animation: loader 2s linear infinite;
+    animation: loader 3s linear infinite;
+  }
+
+  &:after {
+    border: 3px solid transparent;
+    border-top-color: #ff0202;
+    border-bottom-color: #ff0202;
+    border-radius: 50%;
+    -webkit-animation: loader 1.5s linear infinite;
+    animation: loader 1.5s linear infinite;
+    -moz-animation: loader 2s linear infinite;
+    -o-animation: loader 2s linear infinite;
+  }
+}
+
+@keyframes loader {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    box-shadow: inset 0 0 0 rgba(169, 81, 251, 0.4),
+      0 0 1.5em rgba(169, 81, 251, 0.6);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+    box-shadow: inset 0 0 0 rgba(169, 81, 251, 0.4),
+      0 0 1.5em rgba(169, 81, 251, 0.6);
+  }
+}
+
+@keyframes bgAnime {
+  0% {
+    opacity: 1;
+  }
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
