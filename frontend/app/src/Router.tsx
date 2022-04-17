@@ -15,6 +15,7 @@ import TermsOfService from './templates/termsOfService/TermsOfService';
 import PrivacyPolicy from './templates/privacyPolicy/PrivacyPolicy';
 import EmailPost from './templates/auth/EmailPost';
 import PasswordReset from './templates/auth/PasswordReset';
+import Contact from './templates/contact/Contact';
 
 const Router = () => {
   return (
@@ -34,6 +35,7 @@ const Router = () => {
         <Route exact path="/home" component={Home} />
         <Route exact path="/terms" component={TermsOfService} />
         <Route exact path="/privacy" component={PrivacyPolicy} />
+        <Route exact path="/contact" component={Contact} />
       </Switch>
       <Footer />
     </BrowserRouter>
