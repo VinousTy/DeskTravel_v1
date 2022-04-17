@@ -16,12 +16,14 @@ import PrivacyPolicy from './templates/privacyPolicy/PrivacyPolicy';
 import EmailPost from './templates/auth/EmailPost';
 import PasswordReset from './templates/auth/PasswordReset';
 import Contact from './templates/contact/Contact';
+import Top from './templates/top/Top';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Header />
       <Switch>
+        <Route exact path="/" component={Top} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/reset" component={EmailPost} />
