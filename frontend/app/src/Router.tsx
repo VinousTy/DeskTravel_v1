@@ -29,6 +29,7 @@ const Router = () => {
         <Route exact path="/reset" component={EmailPost} />
         <Route path={'/password/reset(/?token=)?'} component={PasswordReset} />
         <Route exact path="/profile" component={Profile} />
+        <Route path={'/profile(/:id)?'} component={Profile} />
         <Route exact path="/post/regist" component={PostRegist} />
         <Route path={'/post/edit(/:id)?'} component={PostEdit} />
         <Route exact path="/post/list" component={PostList} />
