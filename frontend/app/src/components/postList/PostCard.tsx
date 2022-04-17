@@ -286,7 +286,7 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
             <Checkbox
               className={`${classes.iconButton} text-white`}
               icon={<BookmarkBorderIcon className="text-white" />}
-              checkedIcon={<BookmarkIcon className="text-green-500" />}
+              checkedIcon={<BookmarkIcon className="text-green" />}
               data-testid="bookmark-icon"
               checked={bookmark.some((bookmark) => bookmark === loginId)}
               onChange={handlerBookmark}
