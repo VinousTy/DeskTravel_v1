@@ -56,7 +56,7 @@ const Contact: React.FC = () => {
         <div
           className={`w-10/12 mt-10 mb-10 md:w-4/12 mx-auto pt-14 text-center text-white h-auto bg-thin-black rounded`}
         >
-          <h2 className="mb-10 text-xl font-bold" data-setid="title">
+          <h2 className="mb-10 text-xl font-bold" data-testid="title">
             お問い合わせ
           </h2>
           <div className="mb-4">
@@ -64,7 +64,7 @@ const Contact: React.FC = () => {
             <input
               className="md:shadow bg-black placeholder-gray-500 appearance-none rounded w-9/12 py-2 px-3 mb-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               id="name"
-              data-setid="input-name"
+              data-testid="input-name"
               type="text"
               placeholder="例) 山田 太郎"
               {...register('name', {
@@ -88,7 +88,7 @@ const Contact: React.FC = () => {
             <input
               className="md:shadow bg-black placeholder-gray-500 appearance-none rounded w-9/12 py-2 px-3 mb-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               id="email"
-              data-setid="input-email"
+              data-testid="input-email"
               type="text"
               placeholder="例) info@example.com"
               {...register('email', {
@@ -117,7 +117,7 @@ const Contact: React.FC = () => {
             <textarea
               className="form-control md:shadow bg-black placeholder-fray-500 appearance-none rounded w-9/12 py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
               id="message"
-              data-setid="input-message"
+              data-testid="input-message"
               rows={6}
               placeholder="ご不明点やご要望などを記載してください。"
               {...register('message', {
@@ -143,7 +143,7 @@ const Contact: React.FC = () => {
           <div
             className={`${styles.btn} bg-black py-8 cursor-pointer rounded-b`}
           >
-            <button type="submit" data-setid="button-submit">
+            <button type="submit" data-testid="button-submit">
               送信
             </button>
           </div>
