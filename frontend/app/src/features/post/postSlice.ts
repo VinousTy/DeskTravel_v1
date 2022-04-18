@@ -75,47 +75,85 @@ const initialState: POST_STATE = {
 };
 
 export const getPosts = createAsyncThunk('posts/get', async () => {
-  const res = await axios.get(apiUrlPost, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(apiUrlPost, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else if (localStorage.access_token) {
+    const res = await axios.get(apiUrlPost, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const createPost = createAsyncThunk(
   'create/post',
   async (body: POST_BODY) => {
-    const res = await axios.post(`${apiUrlPost}`, body, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrlPost}`, body, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrlPost}`, body, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
 export const deletePost = createAsyncThunk(
   'delete/post',
   async (id: POST_ID) => {
-    const res = await axios.delete(`${apiUrlPost}${id.id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.delete(`${apiUrlPost}${id.id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.delete(`${apiUrlPost}${id.id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
 export const getMyPost = createAsyncThunk('post/get', async () => {
-  const res = await axios.get(apiUrlMyPost, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(apiUrlMyPost, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(apiUrlMyPost, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const updatePost = createAsyncThunk(
@@ -123,23 +161,42 @@ export const updatePost = createAsyncThunk(
   async (newPost: NEW_POST) => {
     const uploadData = new FormData();
     uploadData.append('body', newPost.body);
-    const res = await axios.put(`${apiUrlPost}${newPost.id}/`, uploadData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(`${apiUrlPost}${newPost.id}/`, uploadData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.put(`${apiUrlPost}${newPost.id}/`, uploadData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
 export const getImage = createAsyncThunk('image/get', async () => {
-  const res = await axios.get(apiUrlPostImage, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(apiUrlPostImage, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(apiUrlPostImage, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postImage = createAsyncThunk(
@@ -148,12 +205,21 @@ export const postImage = createAsyncThunk(
     const uploadData = new FormData();
     image.img && uploadData.append('img', image.img, image.img.name);
     uploadData.append('postId', image.postId);
-    const res = await axios.post(apiUrlPostImage, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(apiUrlPostImage, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(apiUrlPostImage, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -163,13 +229,31 @@ export const updateImage = createAsyncThunk(
     const uploadData = new FormData();
     image.img && uploadData.append('img', image.img, image.img.name);
     uploadData.append('postId', image.postId);
-    const res = await axios.put(`${apiUrlPostImage}${image.id}/`, uploadData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrlPostImage}${image.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrlPostImage}${image.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
@@ -188,28 +272,53 @@ export const patchLiked = createAsyncThunk(
       }
     });
 
-    if (!overlapped) {
-      uploadData.append('liked', String(liked.new));
-    } else if (currentLiked.length === 1) {
-      uploadData.append('body', liked.body);
-      liked.current_bookmark.forEach((current) => {
-        uploadData.append('bookmark', String(current));
-      });
-      const res = await axios.put(`${apiUrlPost}${liked.id}/`, uploadData, {
+    if (localStorage.localJWT) {
+      if (!overlapped) {
+        uploadData.append('liked', String(liked.new));
+      } else if (currentLiked.length === 1) {
+        uploadData.append('body', liked.body);
+        liked.current_bookmark.forEach((current) => {
+          uploadData.append('bookmark', String(current));
+        });
+        const res = await axios.put(`${apiUrlPost}${liked.id}/`, uploadData, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        });
+        return res.data;
+      }
+      const res = await axios.patch(`${apiUrlPost}${liked.id}/`, uploadData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `JWT ${localStorage.localJWT}`,
         },
       });
       return res.data;
+    } else {
+      if (!overlapped) {
+        uploadData.append('liked', String(liked.new));
+      } else if (currentLiked.length === 1) {
+        uploadData.append('body', liked.body);
+        liked.current_bookmark.forEach((current) => {
+          uploadData.append('bookmark', String(current));
+        });
+        const res = await axios.put(`${apiUrlPost}${liked.id}/`, uploadData, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        });
+        return res.data;
+      }
+      const res = await axios.patch(`${apiUrlPost}${liked.id}/`, uploadData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
     }
-    const res = await axios.patch(`${apiUrlPost}${liked.id}/`, uploadData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
   }
 );
 
@@ -228,38 +337,88 @@ export const patchBookmark = createAsyncThunk(
       }
     });
 
-    if (!overlapped) {
-      uploadData.append('bookmark', String(bookmark.new_bookmark));
-    } else if (currentBookmark.length === 1) {
-      uploadData.append('body', bookmark.body);
-      bookmark.current.forEach((current) => {
-        uploadData.append('liked', String(current));
-      });
-      const res = await axios.put(`${apiUrlPost}${bookmark.id}/`, uploadData, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${localStorage.localJWT}`,
-        },
-      });
+    if (localStorage.localJWT) {
+      if (!overlapped) {
+        uploadData.append('bookmark', String(bookmark.new_bookmark));
+      } else if (currentBookmark.length === 1) {
+        uploadData.append('body', bookmark.body);
+        bookmark.current.forEach((current) => {
+          uploadData.append('liked', String(current));
+        });
+        const res = await axios.put(
+          `${apiUrlPost}${bookmark.id}/`,
+          uploadData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `JWT ${localStorage.localJWT}`,
+            },
+          }
+        );
+        return res.data;
+      }
+      const res = await axios.patch(
+        `${apiUrlPost}${bookmark.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      if (!overlapped) {
+        uploadData.append('bookmark', String(bookmark.new_bookmark));
+      } else if (currentBookmark.length === 1) {
+        uploadData.append('body', bookmark.body);
+        bookmark.current.forEach((current) => {
+          uploadData.append('liked', String(current));
+        });
+        const res = await axios.put(
+          `${apiUrlPost}${bookmark.id}/`,
+          uploadData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.access_token}`,
+            },
+          }
+        );
+        return res.data;
+      }
+      const res = await axios.patch(
+        `${apiUrlPost}${bookmark.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
       return res.data;
     }
-    const res = await axios.patch(`${apiUrlPost}${bookmark.id}/`, uploadData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
   }
 );
 
 export const getMonitor = createAsyncThunk('monitor/get', async () => {
-  const res = await axios.get(`${apiUrl}api/monitor/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/monitor/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/monitor/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postMonitor = createAsyncThunk(
@@ -269,12 +428,21 @@ export const postMonitor = createAsyncThunk(
     const name = monitor.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', monitor.postId);
-    const res = await axios.post(`${apiUrl}api/monitor/`, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/monitor/`, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/monitor/`, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -285,27 +453,50 @@ export const updateMonitor = createAsyncThunk(
     const name = monitor.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', monitor.postId);
-    const res = await axios.put(
-      `${apiUrl}api/monitor/${monitor.id}/`,
-      uploadData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${localStorage.localJWT}`,
-        },
-      }
-    );
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/monitor/${monitor.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/monitor/${monitor.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getComputer = createAsyncThunk('computer/get', async () => {
-  const res = await axios.get(`${apiUrl}api/computer/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/computer/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/computer/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postComputer = createAsyncThunk(
@@ -315,12 +506,21 @@ export const postComputer = createAsyncThunk(
     const name = computer.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', computer.postId);
-    const res = await axios.post(`${apiUrl}api/computer/`, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/computer/`, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/computer/`, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -331,27 +531,50 @@ export const updateComputer = createAsyncThunk(
     const name = computer.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', computer.postId);
-    const res = await axios.put(
-      `${apiUrl}api/computer/${computer.id}/`,
-      uploadData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${localStorage.localJWT}`,
-        },
-      }
-    );
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/computer/${computer.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/computer/${computer.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getKeyboard = createAsyncThunk('keyboard/get', async () => {
-  const res = await axios.get(`${apiUrl}api/keyboard/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/keyboard/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/keyboard/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postKeyboard = createAsyncThunk(
@@ -361,12 +584,21 @@ export const postKeyboard = createAsyncThunk(
     const name = keyboard.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', keyboard.postId);
-    const res = await axios.post(`${apiUrl}api/keyboard/`, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/keyboard/`, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/keyboard/`, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -377,27 +609,50 @@ export const updateKeyboard = createAsyncThunk(
     const name = keyboard.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', keyboard.postId);
-    const res = await axios.put(
-      `${apiUrl}api/keyboard/${keyboard.id}/`,
-      uploadData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${localStorage.localJWT}`,
-        },
-      }
-    );
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/keyboard/${keyboard.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/keyboard/${keyboard.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getMouse = createAsyncThunk('mouse/get', async () => {
-  const res = await axios.get(`${apiUrl}api/mouse/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/mouse/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/mouse/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postMouse = createAsyncThunk(
@@ -407,12 +662,21 @@ export const postMouse = createAsyncThunk(
     const name = mouse.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', mouse.postId);
-    const res = await axios.post(`${apiUrl}api/mouse/`, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/mouse/`, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/mouse/`, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -423,23 +687,50 @@ export const updateMouse = createAsyncThunk(
     const name = mouse.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', mouse.postId);
-    const res = await axios.put(`${apiUrl}api/mouse/${mouse.id}/`, uploadData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/mouse/${mouse.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/mouse/${mouse.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getSpeaker = createAsyncThunk('speaker/get', async () => {
-  const res = await axios.get(`${apiUrl}api/speaker/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/speaker/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/speaker/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postSpeaker = createAsyncThunk(
@@ -449,12 +740,21 @@ export const postSpeaker = createAsyncThunk(
     const name = speaker.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', speaker.postId);
-    const res = await axios.post(`${apiUrl}api/speaker/`, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/speaker/`, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/speaker/`, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -465,27 +765,50 @@ export const updateSpeaker = createAsyncThunk(
     const name = speaker.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', speaker.postId);
-    const res = await axios.put(
-      `${apiUrl}api/speaker/${speaker.id}/`,
-      uploadData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${localStorage.localJWT}`,
-        },
-      }
-    );
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/speaker/${speaker.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/speaker/${speaker.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getTable = createAsyncThunk('table/get', async () => {
-  const res = await axios.get(`${apiUrl}api/table/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/table/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/table/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postTable = createAsyncThunk(
@@ -495,12 +818,21 @@ export const postTable = createAsyncThunk(
     const name = table.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', table.postId);
-    const res = await axios.post(`${apiUrl}api/table/`, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/table/`, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/table/`, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -511,23 +843,50 @@ export const updateTable = createAsyncThunk(
     const name = table.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', table.postId);
-    const res = await axios.put(`${apiUrl}api/table/${table.id}/`, uploadData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/table/${table.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/table/${table.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getChair = createAsyncThunk('chair/get', async () => {
-  const res = await axios.get(`${apiUrl}api/chair/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/chair/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/chair/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postChair = createAsyncThunk(
@@ -537,12 +896,21 @@ export const postChair = createAsyncThunk(
     const name = chair.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', chair.postId);
-    const res = await axios.post(`${apiUrl}api/chair/`, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/chair/`, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/chair/`, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -553,23 +921,50 @@ export const updateChair = createAsyncThunk(
     const name = chair.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', chair.postId);
-    const res = await axios.put(`${apiUrl}api/chair/${chair.id}/`, uploadData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/chair/${chair.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/chair/${chair.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getOther = createAsyncThunk('other/get', async () => {
-  const res = await axios.get(`${apiUrl}api/other/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/other/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/other/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postOther = createAsyncThunk(
@@ -579,12 +974,21 @@ export const postOther = createAsyncThunk(
     const name = other.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', other.postId);
-    const res = await axios.post(`${apiUrl}api/other/`, uploadData, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/other/`, uploadData, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/other/`, uploadData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -595,34 +999,70 @@ export const updateOther = createAsyncThunk(
     const name = other.name.join(',');
     uploadData.append('name', name);
     uploadData.append('postId', other.postId);
-    const res = await axios.put(`${apiUrl}api/other/${other.id}/`, uploadData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/other/${other.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/other/${other.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getComments = createAsyncThunk('comment/get', async () => {
-  const res = await axios.get(apiUrlComment, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(apiUrlComment, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(apiUrlComment, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const postComment = createAsyncThunk(
   'comment/post',
   async (comment: POST_COMMENT) => {
-    const res = await axios.post(apiUrlComment, comment, {
-      headers: {
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(apiUrlComment, comment, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(apiUrlComment, comment, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 

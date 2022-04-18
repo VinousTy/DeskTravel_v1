@@ -101,13 +101,23 @@ export const registUser = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   'auth/delete',
   async (id: USER_ID) => {
-    const res = await axios.delete(`${apiUrl}api/register/${id.id}/`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.delete(`${apiUrl}api/register/${id.id}/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.delete(`${apiUrl}api/register/${id.id}/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -128,13 +138,23 @@ export const googleLogin = createAsyncThunk(
 export const createProfile = createAsyncThunk(
   'profile/post',
   async (name: PROPS_NAME) => {
-    const res = await axios.post(`${apiUrl}api/profile/`, name, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${localStorage.localJWT}`,
-      },
-    });
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.post(`${apiUrl}api/profile/`, name, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.post(`${apiUrl}api/profile/`, name, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
@@ -147,57 +167,107 @@ export const updateProfile = createAsyncThunk(
     uploadData.append('self_introduction', profile.self_introduction);
     uploadData.append('category', String(profile.category));
     profile.img && uploadData.append('img', profile.img, profile.img.name);
-    const res = await axios.put(
-      `${apiUrl}api/profile/${profile.id}/`,
-      uploadData,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${localStorage.localJWT}`,
-        },
-      }
-    );
-    return res.data;
+    if (localStorage.localJWT) {
+      const res = await axios.put(
+        `${apiUrl}api/profile/${profile.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${localStorage.localJWT}`,
+          },
+        }
+      );
+      return res.data;
+    } else {
+      const res = await axios.put(
+        `${apiUrl}api/profile/${profile.id}/`,
+        uploadData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.access_token}`,
+          },
+        }
+      );
+      return res.data;
+    }
   }
 );
 
 export const getMyProfile = createAsyncThunk('profile/get', async () => {
-  const res = await axios.get(`${apiUrl}api/myprofile/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data[0];
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/myprofile/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data[0];
+  } else {
+    const res = await axios.get(`${apiUrl}api/myprofile/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data[0];
+  }
 });
 
 export const getProfiles = createAsyncThunk('profiles/get', async () => {
-  const res = await axios.get(`${apiUrl}api/profile/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
-});
-
-export const searchGetProfiles = createAsyncThunk(
-  'search/profile',
-  async (name: PROPS_NAME) => {
-    const res = await axios.get(`${apiUrl}api/profile/?name=${name.name}`, {
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/profile/`, {
       headers: {
         Authorization: `JWT ${localStorage.localJWT}`,
       },
     });
     return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/profile/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
+});
+
+export const searchGetProfiles = createAsyncThunk(
+  'search/profile',
+  async (name: PROPS_NAME) => {
+    if (localStorage.localJWT) {
+      const res = await axios.get(`${apiUrl}api/profile/?name=${name.name}`, {
+        headers: {
+          Authorization: `JWT ${localStorage.localJWT}`,
+        },
+      });
+      return res.data;
+    } else {
+      const res = await axios.get(`${apiUrl}api/profile/?name=${name.name}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      return res.data;
+    }
   }
 );
 
 export const getCategory = createAsyncThunk('category/get', async () => {
-  const res = await axios.get(`${apiUrl}api/category/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
+  if (localStorage.localJWT) {
+    const res = await axios.get(`${apiUrl}api/category/`, {
+      headers: {
+        Authorization: `JWT ${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  } else {
+    const res = await axios.get(`${apiUrl}api/category/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.access_token}`,
+      },
+    });
+    return res.data;
+  }
 });
 
 export const authSlice = createSlice({
