@@ -99,8 +99,8 @@ const SwiperList: React.FC<PROPS_POST_LIST> = ({
     return img.postId === postId;
   });
 
-  const userCategory = categories.filter((category) => {
-    return category.id === profile.category;
+  const userCategory = categories?.filter((category?) => {
+    return category?.id === profile?.category;
   });
 
   useEffect(() => {

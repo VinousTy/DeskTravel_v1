@@ -20,8 +20,8 @@ const ProfileList: React.FC<PROPS_PROFILELIST> = (props) => {
   const isWide = useMedia({ maxWidth: '768px' });
   const history = useHistory();
 
-  const userCategory = categories.filter((category) => {
-    return category.id === profile.category;
+  const userCategory = categories?.filter((category?) => {
+    return category?.id === profile?.category;
   });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const ProfileList: React.FC<PROPS_PROFILELIST> = (props) => {
               <></>
             ) : (
               <>
-                {profile.self_introduction ==
+                {profile?.self_introduction ==
                 'ゲストユーザーとしてログインしています。ゲストユーザーのため、各種投稿やユーザー情報の変更等の一部機能の使用は制限されております。' ? (
                   <div
                     className={`${styles.btn} md:flex shadow bg-black ml-4 px-8 py-3 appearance-none rounded text-gray-600 leading-tight cursor-pointer absolute top-0 right-0`}
@@ -108,7 +108,7 @@ const ProfileList: React.FC<PROPS_PROFILELIST> = (props) => {
             ))}
           </div>
           <div className="px-8 pt-5">{props.self_introduction}</div>
-          {profile.self_introduction ==
+          {profile?.self_introduction ==
           'ゲストユーザーとしてログインしています。ゲストユーザーのため、各種投稿やユーザー情報の変更等の一部機能の使用は制限されております。' ? (
             <div className="flex appearance-none rounded leading-tight mt-4 cursor-pointer text-blue-500 justify-end">
               <FaTools />

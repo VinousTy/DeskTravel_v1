@@ -7,6 +7,7 @@ import PostCard from '../../components/postList/PostCard';
 import SwiperPostList from '../../components/postList/swiperPostList/SwiperPostList';
 import NewPostModal from '../../components/postModal/NewPostModal';
 import {
+  createProfile,
   getMyProfile,
   isSignIn,
   selectProfile,
@@ -16,11 +17,14 @@ import {
   isOpenModal,
   selectPosts,
 } from '../../features/post/postSlice';
+import { useHistory } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const posts = useSelector(selectPosts);
   const profile = useSelector(selectProfile);
+  const history = useHistory();
+
   const postRank = posts?.filter((post) => {
     if (post.liked.length) {
       return post;
@@ -52,8 +56,21 @@ const Home: React.FC = () => {
     const fetchBootLoader = async () => {
       if (localStorage.localJWT || localStorage.access_token) {
         const result = await dispatch(getMyProfile());
-        if (getMyProfile.rejected.match(result)) {
-          return null;
+        console.log(result);
+        if (result.payload === undefined) {
+          Swal.fire({
+            icon: 'error',
+            title: 'プロフィール未作成',
+            text: 'プロフィールが作成されていません。Myページから作成して下さい。',
+            color: '#fff',
+            background: '#222',
+          })
+            .then(() => {
+              dispatch(createProfile({ name: 'anonymouse' }));
+            })
+            .then(() => {
+              history.push('/mypage');
+            });
         }
         await dispatch(getPosts());
         await dispatch(isSignIn());
@@ -96,7 +113,7 @@ const Home: React.FC = () => {
         <p className="text-center md:text-left text-gray-500 md:ml-20 mt-1 mb-5">
           最新5件の投稿
         </p>
-        <SwiperPostList loginId={profile.userProfile} />
+        <SwiperPostList loginId={profile?.userProfile} />
       </div>
       <div>
         <h2 className="text-center text-white md:text-left text-3xl font-bold md:ml-20 mt-10">
@@ -114,7 +131,7 @@ const Home: React.FC = () => {
                 key={post.id}
                 postId={post.id}
                 body={post.body}
-                loginId={profile.userProfile}
+                loginId={profile?.userProfile}
                 userPost={post.userPost}
                 bookmark={post.bookmark}
                 liked={post.liked}
