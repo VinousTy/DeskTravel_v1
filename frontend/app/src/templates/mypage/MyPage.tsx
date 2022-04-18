@@ -39,7 +39,7 @@ const MyPage: React.FC = () => {
   const arry: Array<POST_BOOKMARK> = [];
   const BookMark = posts.filter((post) => {
     post.bookmark.forEach((book) => {
-      if (book === profile.userProfile) {
+      if (book === profile?.userProfile) {
         arry.push(post);
       }
     });
@@ -68,11 +68,11 @@ const MyPage: React.FC = () => {
       >
         <NewPostModal />
         <ProfileList
-          id={profile.id}
-          name={profile.name}
-          user_name={profile.user_name}
-          self_introduction={profile.self_introduction}
-          img={profile.img}
+          id={profile?.id}
+          name={profile?.name}
+          user_name={profile?.user_name}
+          self_introduction={profile?.self_introduction}
+          img={profile?.img}
         />
         <hr className={`${styles.border} w-full`}></hr>
         <Tabs
