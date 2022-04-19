@@ -124,7 +124,7 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
     return prof.userProfile === loginId;
   });
 
-  const img: any = image.filter((img) => {
+  const img = image.filter((img) => {
     return img.postId === postId;
   });
 

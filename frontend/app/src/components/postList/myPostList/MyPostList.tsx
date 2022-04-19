@@ -12,7 +12,7 @@ const MyPostList: React.FC<POST_ID> = ({ postId }) => {
   const image = useSelector(selectImage);
   const history = useHistory();
 
-  const img: any = image.filter((img) => {
+  const img = image.filter((img) => {
     return img.postId === postId;
   });
 
