@@ -95,7 +95,7 @@ const SwiperList: React.FC<PROPS_POST_LIST> = ({
     return prof.userProfile === userPost;
   });
 
-  const img: any = image.filter((img) => {
+  const img = image.filter((img) => {
     return img.postId === postId;
   });
 

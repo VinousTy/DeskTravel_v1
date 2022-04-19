@@ -204,7 +204,9 @@ const Profile: React.FC = () => {
                 message: '※カテゴリの選択は必須です',
               },
             })}
-            onChange={(e: any) => setUserCategory(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setUserCategory(Number(e.target.value))
+            }
           >
             <option value="">カテゴリを選択してください</option>
             {categories.map((category) => (

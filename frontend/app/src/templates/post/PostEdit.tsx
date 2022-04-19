@@ -138,7 +138,7 @@ const PostEdit: React.FC = () => {
     return post.id === Number(id);
   });
 
-  const postOnImg: any = postGetImage.filter((img) => {
+  const postOnImg = postGetImage.filter((img) => {
     return img.postId === Number(id);
   });
 
