@@ -11,7 +11,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import useMedia from 'use-media';
 
-const customStyles_sm: any = {
+const customStyles_sm: { [key: string]: React.CSSProperties } = {
   overlay: {
     position: 'fixed',
     top: 0,
@@ -31,7 +31,7 @@ const customStyles_sm: any = {
   },
 };
 
-const customStyles: any = {
+const customStyles: { [key: string]: React.CSSProperties } = {
   overlay: {
     position: 'fixed',
     top: 0,

@@ -14,7 +14,7 @@ import { Collapse } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import EditPostList from '../postList/editPostList/EditPostList';
 
-const customStyles: any = {
+const customStyles: { [key: string]: React.CSSProperties } = {
   overlay: {
     position: 'fixed',
     top: 0,
