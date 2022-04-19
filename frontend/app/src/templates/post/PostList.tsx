@@ -17,6 +17,19 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import NewPostModal from '../../components/postModal/NewPostModal';
 
+interface ARRY {
+  id: number;
+  body: string;
+  userPost: number;
+  created_on: string;
+  bookmark: number[];
+  liked: number[];
+}
+
+interface NAME {
+  name: string;
+}
+
 const PostList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const [name, setName] = useState('');
@@ -29,7 +42,7 @@ const PostList: React.FC = () => {
   const query = new URLSearchParams(search);
   const query_name = query.get('name');
 
-  const arry: any = [];
+  const arry: ARRY[] = [];
   profiles.filter((profile) => {
     posts.forEach((post) => {
       if (profile.userProfile === post.userPost) {
@@ -42,7 +55,7 @@ const PostList: React.FC = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<any>();
+  } = useForm<NAME>();
 
   useEffect(() => {
     const fetchBootLoader = async () => {
@@ -101,7 +114,7 @@ const PostList: React.FC = () => {
             arry
               .slice(0)
               .reverse()
-              .map((arr: any) => (
+              .map((arr) => (
                 <PostCard
                   key={arr.id}
                   postId={arr.id}
