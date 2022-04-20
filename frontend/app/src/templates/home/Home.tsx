@@ -56,7 +56,6 @@ const Home: React.FC = () => {
     const fetchBootLoader = async () => {
       if (localStorage.localJWT || localStorage.access_token) {
         const result = await dispatch(getMyProfile());
-        console.log(result);
         if (result.payload === undefined) {
           Swal.fire({
             icon: 'error',
