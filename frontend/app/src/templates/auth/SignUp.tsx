@@ -184,7 +184,7 @@ const SignUp: React.FC = () => {
                 >
                   <span className="flex justify-between md:justify-center">
                     <BsGoogle className="mt-1 font md:mr-4" />
-                    <span className="md:t">Googleアカウントでログイン</span>
+                    <span className="md:t">Googleアカウントで登録</span>
                   </span>
                 </button>
               )}
