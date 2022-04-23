@@ -11,6 +11,7 @@ import {
 } from '../../features/post/postSlice';
 import { useHistory } from 'react-router-dom';
 import useMedia from 'use-media';
+import logo from '../../assets/logo.png';
 
 const customStyles_sm: { [key: string]: React.CSSProperties } = {
   overlay: {
@@ -83,7 +84,12 @@ const EditPostModal: React.FC = () => {
         style={isWide ? customStyles_sm : customStyles}
       >
         <div className="text-center text-white">
-          <h2 className="text-lg mb-3 leading-6 font-medium">Desk Travel</h2>
+          <h2 className="mb-3 leading-6 font-medium">
+            <img
+              src={logo}
+              className="mx-auto w-10/12 h-10/12 md:mt-1 md:mb-1 md:w-3/12 md:h-3/12"
+            />
+          </h2>
           <br />
           <h3
             className="cursor-pointer hover:text-gray-400  transition-all md:mb-2"

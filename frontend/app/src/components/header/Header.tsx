@@ -21,6 +21,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import AvatarMenu from './AvatarMenu';
 import DrawerMenu from './DrawerMenu';
+import logo from '../../assets/logo.png';
 
 const guestPassword = String(process.env.REACT_APP_GUEST_PASSWORD);
 
@@ -544,12 +545,11 @@ const Header: React.FC = () => {
     <div>
       <div className={`${isWide && 'h-20'} bg-thin-black`}>
         <header className="container mx-auto text-white flex justify-between items-center">
-          <h1
-            className={`${isWide && 'mt-5'} text-4xl font-semibold md:text-xl`}
-            onClick={pageTransition}
-            data-testid="title"
-          >
-            <span className="cursor-pointer">DeskTravel</span>
+          <h1 onClick={pageTransition} data-testid="title">
+            <img
+              src={logo}
+              className="cursor-pointer w-6/12 h-6/12 mt-4 ml-3 md:mt-1 md:mb-1 md:w-8/12 md:h-8/12"
+            />
           </h1>
           {menuIcon()}
         </header>
