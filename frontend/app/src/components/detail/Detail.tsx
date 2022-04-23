@@ -246,7 +246,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
 
   return (
     <div>
-      <div className="md:bg-gray">
+      <div className="md:bg-bg-gray">
         <div className="flex relative">
           <Avatar
             src={prof[0]?.img}
@@ -488,7 +488,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
       )}
       <div
         className="
-        mb-10 pb-10 pt-2 mx-auto text-white bg-thin-black rounded md:mt-0 md:h-auto md:bg-gray"
+        mb-10 pb-10 pt-2 mx-auto text-white bg-thin-black rounded md:mt-0 md:h-auto md:bg-bg-gray"
       >
         <h5 className="text-center font-bold text-lg">機器構成</h5>
         <div className="md:flex md:flex-wrap mb-6">
