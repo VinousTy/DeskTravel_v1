@@ -91,7 +91,7 @@ const Home: React.FC = () => {
   return (
     <div className="pb-20">
       <NewPostModal />
-      <div className={`${styles.top_img} h-48 md:h-56`}>
+      <div className={`${styles.top_img} h-52 md:h-56`}>
         <h2 className="text-lg font-bold pt-10 text-center">
           あなただけのこだわりデスクを投稿しよう
         </h2>
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
         <h2 className="text-center text-white md:text-left text-3xl font-bold md:ml-20 mt-10">
           最新の投稿
         </h2>
-        <p className="text-center md:text-left text-gray-500 md:ml-20 mt-1 mb-5">
+        <p className="text-center md:text-left text-gray md:ml-20 mt-1 mb-5">
           最新5件の投稿
         </p>
         <SwiperPostList loginId={profile?.userProfile} />
@@ -118,7 +118,7 @@ const Home: React.FC = () => {
         <h2 className="text-center text-white md:text-left text-3xl font-bold md:ml-20 mt-10">
           DeskTravlランキング
         </h2>
-        <p className="text-center md:text-left text-gray-500 md:ml-20 mt-1">
+        <p className="text-center md:text-left text-gray md:ml-20 mt-1">
           いいねが最も多い投稿
         </p>
         <div
