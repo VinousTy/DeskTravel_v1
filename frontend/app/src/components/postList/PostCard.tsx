@@ -129,7 +129,7 @@ const PostList: React.FC<PROPS_POST_LIST> = ({
   });
 
   const userCategory = categories?.filter((category?) => {
-    return category?.id === profile?.category;
+    return category?.id === prof[0]?.category;
   });
 
   const handleExpandClick = () => {
