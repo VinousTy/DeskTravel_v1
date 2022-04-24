@@ -428,7 +428,7 @@ const Detail: React.FC<PROPS_POST_DETAIL> = ({
                     <Checkbox
                       className="text-white"
                       icon={<BookmarkBorderIcon className="text-white" />}
-                      checkedIcon={<BookmarkIcon className="text-green-500" />}
+                      checkedIcon={<BookmarkIcon className="text-green" />}
                       checked={bookmark.some(
                         (bookmark) => bookmark === loginId
                       )}
