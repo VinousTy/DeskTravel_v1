@@ -106,7 +106,7 @@ const Profile: React.FC = () => {
       <div
         className={`${styles.container} w-10/12 mt-10 mb-10 md:w-4/12 mx-auto pt-14 text-center text-white h-auto bg-thin-black rounded`}
       >
-        <h2 className="mb-10 ">プロフィールを設定</h2>
+        <h2 className="mb-10 text-xl font-bold">プロフィールを設定</h2>
         <input
           type="file"
           id="imageInput"
